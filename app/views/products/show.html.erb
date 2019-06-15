@@ -1,0 +1,21 @@
+<div class="productName" ><h3> <%= @product.name %> </h3> </div> 
+<div class="productDescription" ><h3> <%= truncate @product.description %> </h3> </div> 
+<div class="productPrice" ><h3> <%= @product.price %> </h3> </div> 
+<div class="productInventory" ><h3> <%= @product.inventory %> </h3> </div> 
+<a href="#" class="js-next" data-id="<%=@product.id%>">Next Product...</a>
+
+<script type="text/javascript" charset="utf-8">
+$(function () {
+  $(".js-next").on("click", function() {
+    var nextId = parseInt($(".js-next").attr("data-id")) + 1;
+    $.getJSON("/posts/" + nextId + "/data", function(data) {
+      $(".productName").text(data["product"]["name"]);
+      $(".productPrice").text(data["product"]["price"]);
+      $(".productInventory").text(data["product"]["inventory"]);
+      $(".productDescription").text(data["product"]["description"]);
+      // re-set the id to current on the link
+      $(".js-next").attr("data-id", data["id"]);
+    });
+  });
+});
+</script>
